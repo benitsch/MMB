@@ -32,7 +32,7 @@ public class Explosion {
             image[i] = Bitmap.createBitmap(spritesheet, (i-(5*row))*width, row*height, width, height);
         }
         animation.setFrames(image);
-        animation.setDelay(10);
+        animation.setDelay(20);
 
 
 

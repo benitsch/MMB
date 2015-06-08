@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,7 +48,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
     private boolean reset;
     private boolean dissapear;
     private boolean started;
-    private int best;
+    private int best =0;
+
+    private SoundPool sp=new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+    int soundId = sp.load(getContext(),R.raw.explosion,1);
 
 
 
@@ -254,18 +259,28 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
             if(resetElapsed > 2500 && !newGameCreated)
             {
                 newGame();
+
             }
 
 
         }
+
 
     }
     public boolean collision(GameObject a, GameObject b)
     {
         if(Rect.intersects(a.getRectangle(), b.getRectangle()))
         {
+            sp.play(soundId,1,1,0,0,1);
+
+            if(player.getScore()>best)
+            {
+                best = player.getScore();
+
+            }
             return true;
         }
+
         return false;
     }
     @Override
@@ -417,11 +432,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         player.resetScore();
         player.setY(HEIGHT/2);
 
-        if(player.getScore()>best)
-        {
-            best = player.getScore();
 
-        }
 
         //create initial borders
 
@@ -467,7 +478,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         paint.setColor(Color.WHITE);
         paint.setTextSize(30);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("DISTANCE: " + (player.getScore()*3), 10, HEIGHT - 10, paint);
+        canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
         canvas.drawText("BEST: " + best, WIDTH - 215, HEIGHT - 10, paint);
 
         if(!player.getPlaying()&&newGameCreated&&reset)
