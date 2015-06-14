@@ -28,7 +28,7 @@ public class Player extends GameObject {
         height = h;
         width = w;
 
-        spritesheet = res;
+        spritesheet= res;
 
         setAnimation(res, numFrames);
 
@@ -74,10 +74,10 @@ public class Player extends GameObject {
 
 
         if (powerUpOn) {
-            long elapsedPowerUp = (System.nanoTime() - PowerUpTime) / 1000000;
-            if (elapsedPowerUp > 3000) {
-                setAnimation(spritesheet, 3);
+            long elapsedPowerUp = (System.nanoTime()-PowerUpTime ) / 1000000;
+            if (elapsedPowerUp > 1000000) {
                 powerUpOn = false;
+                setAnimation(spritesheet, 3);
             }
         }
 
@@ -106,17 +106,12 @@ public class Player extends GameObject {
     public void resetScore() {
         score = 0;
     }
-    public boolean getPowerUpOn(){
-        return this.powerUpOn;
-    }
 
     public void PowerUpOn(Bitmap res) {
-        if (!powerUpOn) {
-            powerUpSheet = res;
-            setAnimation(powerUpSheet, 3);
+        powerUpSheet = res;
+        setAnimation(powerUpSheet, 3);
 
-            PowerUpTime = System.nanoTime();
-            this.powerUpOn = true;
-        }
+        PowerUpTime = System.nanoTime() / 1000000;
+        this.powerUpOn = true;
     }
 }
