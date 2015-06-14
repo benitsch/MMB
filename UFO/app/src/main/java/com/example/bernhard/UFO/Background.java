@@ -23,6 +23,7 @@ public class Background {
     }
     public void draw(Canvas canvas)
     {
+        //drawBitmap(Bitmap bitmap, float left, float top, Paint paint)
         canvas.drawBitmap(image, x, y,null);
         if(x<0)
         {

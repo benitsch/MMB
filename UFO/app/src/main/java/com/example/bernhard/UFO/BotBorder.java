@@ -10,7 +10,12 @@ public class BotBorder extends GameObject {
 
     private Bitmap image;
 
+<<<<<<< HEAD
     public BotBorder(Bitmap res, int x, int y) {
+=======
+    public BotBorder(Bitmap res, int x, int y)
+    {
+>>>>>>> 7dbdfff1fdfa4b0a00c291a66f697516800b67ca
         height = 200;
         width = 20;
 
