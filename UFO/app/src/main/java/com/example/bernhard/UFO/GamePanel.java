@@ -52,6 +52,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private SoundPool sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
     int soundId = sp.load(getContext(), R.raw.explosion, 1);
+    int soundId2 = sp.load(getContext(), R.raw.asd, 1);
 
 
     public GamePanel(Context context) {
@@ -164,14 +165,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             //check bottom border collision
             for (int i = 0; i < botborder.size(); i++) {
-                if (collision(botborder.get(i), player))
+                if (collision(botborder.get(i), player) && !player.getPowerUpOn()) {
+                    soundExplosion();
                     player.setPlaying(false);
+                }
             }
 
             //check top border collision
             for (int i = 0; i < topborder.size(); i++) {
-                if (collision(topborder.get(i), player))
+                if (collision(topborder.get(i), player) && !player.getPowerUpOn()) {
+                    soundExplosion();
                     player.setPlaying(false);
+                }
             }
 
             //update top border
@@ -204,7 +209,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 if (collision(missiles.get(i), player)) {
                     missiles.remove(i);
-                    player.setPlaying(false);
+
+
+                    if (!player.getPowerUpOn()) {
+                        if (player.getScore() > best) {
+                            best = player.getScore();
+                        }
+                        soundExplosion();
+                        player.setPlaying(false);
+                    } else {
+                        soundFailedExplosion();
+                    }
+
                     break;
                 }
 
@@ -229,17 +245,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         //update powerUp
                         powerUp.update();
 
-                        //check collision and remove
+                        //powerUp check collision and remove
                         if (collision(powerUp, player)) {
                             powerUp = null;
                             player.PowerUpOn(BitmapFactory.decodeResource(getResources(), R.drawable.ufo2));
-                            break;
                         }
 
                         //remove powerUp if is is way off the screen
                         else if (powerUp.getX() < -100) {
                             powerUp = null;
-
                         }
                     }
                 }
@@ -270,14 +284,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void soundExplosion() {
+        sp.play(soundId, .2f, .2f, 0, 0, 1);
+    }
+
+    private void soundFailedExplosion() {
+        sp.play(soundId2, 1, 1, 0, 0, 1);
+
+    }
+
     public boolean collision(GameObject a, GameObject b) {
         if (Rect.intersects(a.getRectangle(), b.getRectangle())) {
-            sp.play(soundId, 1, 1, 0, 0, 1);
 
-            if (player.getScore() > best) {
-                best = player.getScore();
-
-            }
             return true;
         }
 
