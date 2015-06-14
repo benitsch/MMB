@@ -90,6 +90,9 @@ public class Player extends GameObject {
     public int getScore() {
         return score;
     }
+    public void addScore(int score){
+        this.score+=score;
+    }
 
     public boolean getPlaying() {
         return playing;

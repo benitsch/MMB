@@ -165,7 +165,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             //check bottom border collision
             for (int i = 0; i < botborder.size(); i++) {
-                if (collision(botborder.get(i), player) && !player.getPowerUpOn()) {
+                if ((collision(botborder.get(i), player)|| playerOutOfScreen()) && !player.getPowerUpOn()) {
+                    updateBest();
                     soundExplosion();
                     player.setPlaying(false);
                 }
@@ -173,7 +174,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             //check top border collision
             for (int i = 0; i < topborder.size(); i++) {
-                if (collision(topborder.get(i), player) && !player.getPowerUpOn()) {
+                if ((collision(topborder.get(i), player)|| playerOutOfScreen()) && !player.getPowerUpOn() ) {
+                    updateBest();
                     soundExplosion();
                     player.setPlaying(false);
                 }
@@ -212,13 +214,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
                     if (!player.getPowerUpOn()) {
-                        if (player.getScore() > best) {
-                            best = player.getScore();
-                        }
+                        updateBest();
                         soundExplosion();
                         player.setPlaying(false);
                     } else {
                         soundFailedExplosion();
+                        player.addScore(50);
                     }
 
                     break;
@@ -248,6 +249,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         //powerUp check collision and remove
                         if (collision(powerUp, player)) {
                             powerUp = null;
+                            player.addScore(25);
                             player.PowerUpOn(BitmapFactory.decodeResource(getResources(), R.drawable.ufo2));
                         }
 
@@ -284,6 +286,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    private void updateBest() {
+        if (player.getScore() > best) {
+            best = player.getScore();
+        }
+    }
+
     private void soundExplosion() {
         sp.play(soundId, .2f, .2f, 0, 0, 1);
     }
@@ -293,9 +301,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    public boolean playerOutOfScreen() {
+        if (player.getY() < 0 || player.getY() > HEIGHT)
+            return true;
+        return false;
+    }
+
     public boolean collision(GameObject a, GameObject b) {
         if (Rect.intersects(a.getRectangle(), b.getRectangle())) {
-
             return true;
         }
 
