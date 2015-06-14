@@ -52,7 +52,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private SoundPool sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
     int soundId = sp.load(getContext(), R.raw.explosion, 1);
-    int soundId2 = sp.load(getContext(), R.raw.asd, 1);
+    int soundId2 = sp.load(getContext(), R.raw.explosionfail, 1);
+    int soundId3 = sp.load(getContext(), R.raw.powerup, 1);
+
 
 
     public GamePanel(Context context) {
@@ -237,10 +239,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 long elapsed = (System.nanoTime() - powerUpTime) / 1000000;
                 if (elapsed > 120) {
                     if (powerUp == null) {
-                        if (rand.nextDouble() >= .0) {
+                        //if (rand.nextDouble() >= .0) TODO less often?
                             powerUp = new PowerUp(BitmapFactory.decodeResource(getResources(), R.drawable.powerup),
                                     WIDTH + 10, (int) (rand.nextDouble() * (HEIGHT - (maxBorderHeight * 2)) + maxBorderHeight), 45, 15, player.getScore(), 13);
-                        }
+
                     }
                     if (powerUp != null) {
                         //update powerUp
@@ -249,6 +251,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                         //powerUp check collision and remove
                         if (collision(powerUp, player)) {
                             powerUp = null;
+                            soundPowerUp();
                             player.addScore(25);
                             player.PowerUpOn(BitmapFactory.decodeResource(getResources(), R.drawable.ufo2));
                         }
@@ -298,6 +301,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void soundFailedExplosion() {
         sp.play(soundId2, 1, 1, 0, 0, 1);
+
+    }
+    private void soundPowerUp() {
+        sp.play(soundId3, .3f, .3f, 0, 0, 1);
 
     }
 

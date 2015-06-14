@@ -75,7 +75,7 @@ public class Player extends GameObject {
 
         if (powerUpOn) {
             long elapsedPowerUp = (System.nanoTime() - PowerUpTime) / 1000000;
-            if (elapsedPowerUp > 3000) {
+            if (elapsedPowerUp > 2500) {
                 setAnimation(spritesheet, 3);
                 powerUpOn = false;
             }
@@ -90,8 +90,9 @@ public class Player extends GameObject {
     public int getScore() {
         return score;
     }
-    public void addScore(int score){
-        this.score+=score;
+
+    public void addScore(int score) {
+        this.score += score;
     }
 
     public boolean getPlaying() {
@@ -109,17 +110,18 @@ public class Player extends GameObject {
     public void resetScore() {
         score = 0;
     }
-    public boolean getPowerUpOn(){
+
+    public boolean getPowerUpOn() {
         return this.powerUpOn;
     }
 
     public void PowerUpOn(Bitmap res) {
-        if (!powerUpOn) {
-            powerUpSheet = res;
-            setAnimation(powerUpSheet, 3);
 
-            PowerUpTime = System.nanoTime();
-            this.powerUpOn = true;
-        }
+        powerUpSheet = res;
+        setAnimation(powerUpSheet, 3);
+
+        PowerUpTime = System.nanoTime();
+        this.powerUpOn = true;
+
     }
 }
