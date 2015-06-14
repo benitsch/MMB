@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 public class BotBorder extends GameObject{
 
     private Bitmap image;
+
     public BotBorder(Bitmap res, int x, int y)
     {
         height = 200;
