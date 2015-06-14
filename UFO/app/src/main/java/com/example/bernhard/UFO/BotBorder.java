@@ -6,11 +6,11 @@ import android.graphics.Canvas;
 /**
  * Created by Bernhard on 26.05.2015.
  */
-public class BotBorder extends GameObject{
+public class BotBorder extends GameObject {
 
     private Bitmap image;
-    public BotBorder(Bitmap res, int x, int y)
-    {
+
+    public BotBorder(Bitmap res, int x, int y) {
         height = 200;
         width = 20;
 
@@ -21,13 +21,13 @@ public class BotBorder extends GameObject{
         image = Bitmap.createBitmap(res, 0, 0, width, height);
 
     }
-    public void update()
-    {
-        x +=dx;
+
+    public void update() {
+        x += dx;
 
     }
-    public void draw(Canvas canvas)
-    {
+
+    public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, y, null);
 
     }
