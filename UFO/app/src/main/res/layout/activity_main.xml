@@ -8,12 +8,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-<<<<<<< HEAD
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
-=======
->>>>>>> 7dbdfff1fdfa4b0a00c291a66f697516800b67ca
 </RelativeLayout>
