@@ -300,7 +300,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void soundFailedExplosion() {
-        sp.play(soundId2, 1, 1, 0, 0, 1);
+        sp.play(soundId2, 5, 5, 0, 0, 1);
 
     }
     private void soundPowerUp() {
