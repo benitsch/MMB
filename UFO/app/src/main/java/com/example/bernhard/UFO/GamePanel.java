@@ -55,7 +55,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     int soundId = sp.load(getContext(), R.raw.explosion, 1);
     int soundId2 = sp.load(getContext(), R.raw.explosionfail, 1);
     int soundId3 = sp.load(getContext(), R.raw.powerup, 1);
-    int soundId4 = sp.load(getContext(), R.raw.tot2, 1);
+
+
+    private SoundPool sp2= new SoundPool(1,AudioManager.STREAM_MUSIC,0);
+    int soundId4 = sp2.load(getContext(), R.raw.tot2, 1);
 
 
     public GamePanel(Context context) {
@@ -300,21 +303,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void soundExplosion() {
-        sp.play(soundId, .2f, .2f, 0, 0, 1);
+        sp.play(soundId, .4f, .4f, 0, 0, 1);
     }
 
     private void soundFailedExplosion() {
-        sp.play(soundId2, 5, 5, 0, 0, 1);
+        sp.play(soundId2, .9f, .9f, 0, 0, 1);
 
     }
 
     private void soundPowerUp() {
-        sp.play(soundId3, .3f, .3f, 0, 0, 1);
+        sp.play(soundId3, .5f, .5f, 0, 0, 1);
 
     }
 
     private void soundTot(){
-        sp.play(soundId4, .3f, .3f, 0, 0, 1);
+        sp2.play(soundId4, .9f, .9f, 0, 0, 1);
     }
 
     public boolean playerOutOfScreen() {

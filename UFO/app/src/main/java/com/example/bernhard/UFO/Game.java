@@ -26,6 +26,7 @@ public class Game extends Activity {
         mp = MediaPlayer.create(this, R.raw.background);
 
         mp.setLooping(true);
+        mp.setVolume(.5f,.5f);
         mp.start();
 
         setContentView(new GamePanel(this));
