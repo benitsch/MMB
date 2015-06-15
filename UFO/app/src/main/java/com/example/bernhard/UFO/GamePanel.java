@@ -1,6 +1,7 @@
 package com.example.bernhard.UFO;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -54,9 +55,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     int soundId = sp.load(getContext(), R.raw.explosion, 1);
     int soundId2 = sp.load(getContext(), R.raw.explosionfail, 1);
     int soundId3 = sp.load(getContext(), R.raw.powerup, 1);
-
-
-
+    int soundId4 = sp.load(getContext(), R.raw.tot2, 1);
 
 
     public GamePanel(Context context) {
@@ -169,18 +168,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             //check bottom border collision
             for (int i = 0; i < botborder.size(); i++) {
-                if ((collision(botborder.get(i), player)|| playerOutOfScreen()) && !player.getPowerUpOn()) {
+                if ((collision(botborder.get(i), player) || playerOutOfScreen()) && !player.getPowerUpOn()) {
                     updateBest();
                     soundExplosion();
+                    soundTot();
                     player.setPlaying(false);
                 }
             }
 
             //check top border collision
             for (int i = 0; i < topborder.size(); i++) {
-                if ((collision(topborder.get(i), player)|| playerOutOfScreen()) && !player.getPowerUpOn() ) {
+                if ((collision(topborder.get(i), player) || playerOutOfScreen()) && !player.getPowerUpOn()) {
                     updateBest();
                     soundExplosion();
+                    soundTot();
                     player.setPlaying(false);
                 }
             }
@@ -220,6 +221,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     if (!player.getPowerUpOn()) {
                         updateBest();
                         soundExplosion();
+                        soundTot();
                         player.setPlaying(false);
                     } else {
                         soundFailedExplosion();
@@ -242,8 +244,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if (elapsed > 120) {
                     if (powerUp == null) {
                         //if (rand.nextDouble() >= .0) TODO less often?
-                            powerUp = new PowerUp(BitmapFactory.decodeResource(getResources(), R.drawable.powerup),
-                                    WIDTH + 10, (int) (rand.nextDouble() * (HEIGHT - (maxBorderHeight * 2)) + maxBorderHeight), 45, 15, player.getScore(), 13);
+                        powerUp = new PowerUp(BitmapFactory.decodeResource(getResources(), R.drawable.powerup),
+                                WIDTH + 10, (int) (rand.nextDouble() * (HEIGHT - (maxBorderHeight * 2)) + maxBorderHeight), 45, 15, player.getScore(), 13);
 
                     }
                     if (powerUp != null) {
@@ -305,9 +307,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         sp.play(soundId2, 5, 5, 0, 0, 1);
 
     }
+
     private void soundPowerUp() {
         sp.play(soundId3, .3f, .3f, 0, 0, 1);
 
+    }
+
+    private void soundTot(){
+        sp.play(soundId4, .3f, .3f, 0, 0, 1);
     }
 
     public boolean playerOutOfScreen() {
@@ -459,7 +466,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.resetDY();
         player.resetScore();
         player.setY(HEIGHT / 2);
-        powerUp=null;
+        powerUp = null;
 
 
         //create initial borders
