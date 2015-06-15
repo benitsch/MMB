@@ -457,6 +457,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.resetDY();
         player.resetScore();
         player.setY(HEIGHT / 2);
+        powerUp=null;
 
 
         //create initial borders
