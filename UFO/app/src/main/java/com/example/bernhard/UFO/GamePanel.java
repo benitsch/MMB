@@ -517,11 +517,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setColor(Color.WHITE);
             paint1.setTextSize(40);
             paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            canvas.drawText("PRESS TO START", WIDTH / 2 - 50, HEIGHT / 2, paint1);
+            canvas.drawText("PRESS TO START", WIDTH / 2 - 60, HEIGHT / 2, paint1);
 
             paint1.setTextSize(20);
-            canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH / 2 - 50, HEIGHT / 2 + 20, paint1);
-            canvas.drawText("RELEASE TO GO DOWN", WIDTH / 2 - 50, HEIGHT / 2 + 40, paint1);
+            canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH / 2 - 60, HEIGHT / 2 + 20, paint1);
+            canvas.drawText("RELEASE TO GO DOWN", WIDTH / 2 - 60, HEIGHT / 2 + 40, paint1);
+            canvas.drawText("Try to catch green Missiles to be invincible", WIDTH /2-60 , HEIGHT/2+80,paint1);
+            canvas.drawText("and destroy normal Missiles to get a new Highscore", WIDTH /2-60 , HEIGHT/2+100,paint1);
         }
     }
 }
