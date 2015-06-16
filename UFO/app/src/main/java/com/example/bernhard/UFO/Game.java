@@ -36,7 +36,7 @@ public class Game extends Activity {
     protected void onPause() {
         super.onPause();
         mpCurrPos = mp.getCurrentPosition();
-        mp.stop();
+        mp.pause();
     }
 
     @Override
