@@ -49,7 +49,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean reset;
     private boolean dissapear;
     private boolean started;
-    private int best = 0;
 
     private SoundPool sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
     int soundId = sp.load(getContext(), R.raw.explosion, 1);
@@ -57,7 +56,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     int soundId3 = sp.load(getContext(), R.raw.powerup, 1);
 
 
-    private SoundPool sp2= new SoundPool(1,AudioManager.STREAM_MUSIC,0);
+    private SoundPool sp2 = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
     int soundId4 = sp2.load(getContext(), R.raw.tot2, 1);
 
 
@@ -297,9 +296,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void updateBest() {
-        if (player.getScore() > best) {
-            best = player.getScore();
+
+        SharedPreferences sp = this.getContext().getSharedPreferences("com.example.bernhard.UFO", 0);
+
+        if (player.getScore() > sp.getInt("highscore", 0)) {
+            sp.edit().putInt("highscore", player.getScore()).commit();
         }
+
     }
 
     private void soundExplosion() {
@@ -316,7 +319,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    private void soundTot(){
+    private void soundTot() {
         sp2.play(soundId4, .9f, .9f, 0, 0, 1);
     }
 
@@ -510,6 +513,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(30);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         canvas.drawText("DISTANCE: " + (player.getScore()), 10, HEIGHT - 10, paint);
+        SharedPreferences sp = this.getContext().getSharedPreferences("com.example.bernhard.UFO", 0);
+        int best = sp.getInt("highscore", 0);
         canvas.drawText("BEST: " + best, WIDTH - 215, HEIGHT - 10, paint);
 
         if (!player.getPlaying() && newGameCreated && reset) {
@@ -522,8 +527,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText("PRESS AND HOLD TO GO UP", WIDTH / 2 - 60, HEIGHT / 2 + 20, paint1);
             canvas.drawText("RELEASE TO GO DOWN", WIDTH / 2 - 60, HEIGHT / 2 + 40, paint1);
-            canvas.drawText("Try to catch green Missiles to be invincible", WIDTH /2-60 , HEIGHT/2+80,paint1);
-            canvas.drawText("and destroy normal Missiles to get a new Highscore", WIDTH /2-60 , HEIGHT/2+100,paint1);
+            canvas.drawText("Try to catch green Missiles to be invincible", WIDTH / 2 - 60, HEIGHT / 2 + 80, paint1);
+            canvas.drawText("and destroy normal Missiles to get a new Highscore", WIDTH / 2 - 60, HEIGHT / 2 + 100, paint1);
         }
     }
 }
